@@ -1,15 +1,18 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import MovieCard from "../components/MovieCard";
 import MovieList from "../components/MovieList";
+import GlobalContext from "../contexts/LoaderContextProvider";
 //const API_URL = import.meta.env.VITE_API_URL;
 const API_URL = "http://localhost:3000/api/movies";
 export default function Homepage() {
+    const { setLoading } = useContext(GlobalContext);
     const [movies, setMovies] = useState([]);
     const [error, setError] = useState(null);
-    console.log("movies:", movies);
-    useEffect(() => {
+    //console.log("movies:", movies);
+    function fetchData() {
+        setLoading(true);
         axios.get(API_URL)
             .then(res => {
                 console.log(res);
@@ -20,7 +23,12 @@ export default function Homepage() {
                 console.log(err.message);
                 setError(err.message)
             })
-    }, [])
+            .then(() => {
+                setLoading(false);
+
+            });
+    }
+    useEffect(fetchData, []);
 
 
 

@@ -1,14 +1,17 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import ReviewsList from "../components/ReviewsList";
+
+import GlobalContext from "../contexts/LoaderContextProvider";
 const API_URL = "http://localhost:3000/api/movies";
 export default function Moviepage() {
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
     const [error, setError] = useState(null);
-
-    useEffect(() => {
+    const { setLoading } = useContext(GlobalContext);
+    function fetchData() {
+        setLoading(true);
         axios.get(`${API_URL}/${id}`)
             .then(res => {
                 console.log(res);
@@ -18,7 +21,11 @@ export default function Moviepage() {
                 console.log(err);
                 setError(err.message)
             })
-    }, [])
+            .then(() => {
+                setLoading(false);
+            });
+    }
+    useEffect(fetchData, []);
 
     return (
         <>
