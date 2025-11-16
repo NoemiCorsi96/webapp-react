@@ -1,51 +1,45 @@
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+const API_URL = "http://localhost:3000/api/movies";
 export default function Moviepage() {
-    const { id } = useParams()
+    const { id } = useParams();
+    const [movie, setMovie] = useState(null);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        axios.get(`${API_URL}/${id}`)
+            .then(res => {
+                console.log(res);
+                setMovie(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+                setError(err.message)
+            })
+    }, [])
+
     return (
         <>
             <div className="p-5 mb-4 bg-light rounded-3">
                 <div className="container-fluid py-5 d-flex gap-4">
                     <div className="cover col-12 col-sm-5 col-md-4 ">
 
-                        <img className="img-fluid" src="inception.png" alt="inception" />
+                        <img className="img-fluid" src={movie?.image} alt={movie?.title} />
                     </div>
                     <div className="details">
-                        <h1 className="display-5 fw-bold">Inception</h1>
-                        <div className="my-2">Genere:</div>
+                        <h1 className="display-5 fw-bold">{movie?.title}</h1>
+                        <div className="my-2">{movie?.genre}</div>
 
                         <p className="lead">
-                            Questo è un film che parla di blablabla..
+                            {movie?.abstract}
                         </p>
                     </div>
                 </div>
             </div>
 
 
-            <section id="reviews">
-                <div className="container">
 
-                    <div className="card p-3 mb-4">
-                        <h4>Noemi</h4>
-                        <p> questa è la mia recensione del film e penso che..</p>
-                        <div className="vote text-warning">
-                            <i className="bi bi-star-fill"></i>
-                            <i className="bi bi-star-fill"></i>
-
-                            <i className="bi bi-star-fill"></i>
-
-                            <i className="bi bi-star-fill"></i>
-
-                            <i className="bi bi-star-fill"></i>
-
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-
-            </section>
             <section className="mb-4">
                 <div className="container">
                     <h3>Leave your Review</h3>
@@ -72,6 +66,30 @@ export default function Moviepage() {
 
                     </form>
                 </div>
+            </section>
+
+            <section id="reviews">
+                <div className="container">
+
+
+                    {
+                        movie?.reviews.map(review => (
+                            <div className="card p-3 mb-3 position-relative" key={review.id}>
+                                <h4>{review.name}</h4>
+                                <p> {review.text}</p>
+                                <div> vote: {review.vote}</div>
+                                <div className="vote text-warning">
+                                    {'★'.repeat(review.vote)}{'☆'.repeat(5 - review.vote)}
+
+                                </div>
+
+
+                            </div>
+                        ))
+                    }
+                </div>
+
+
             </section>
 
         </>

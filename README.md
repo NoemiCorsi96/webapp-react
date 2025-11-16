@@ -15,5 +15,5 @@ Cosa fare:
 -fare il moviePage componenete e il suo layout[X]
 -Ajax requests per prendere la lista dei film dall'homepage[X]
 -istallare il middleware CORS [X]
--chiamata ajax per il singolo film e le recensioni 
+-chiamata ajax per il singolo film e le recensioni [X]
 
