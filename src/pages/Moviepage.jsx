@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import ReviewsList from "../components/ReviewsList";
 const API_URL = "http://localhost:3000/api/movies";
 export default function Moviepage() {
     const { id } = useParams();
@@ -68,29 +69,7 @@ export default function Moviepage() {
                 </div>
             </section>
 
-            <section id="reviews">
-                <div className="container">
-
-
-                    {
-                        movie?.reviews.map(review => (
-                            <div className="card p-3 mb-3 position-relative" key={review.id}>
-                                <h4>{review.name}</h4>
-                                <p> {review.text}</p>
-                                <div> vote: {review.vote}</div>
-                                <div className="vote text-warning">
-                                    {'★'.repeat(review.vote)}{'☆'.repeat(5 - review.vote)}
-
-                                </div>
-
-
-                            </div>
-                        ))
-                    }
-                </div>
-
-
-            </section>
+            <ReviewsList reviews={movie?.reviews || []} />
 
         </>
     )

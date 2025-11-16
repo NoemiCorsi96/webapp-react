@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+
 import { useState, useEffect } from "react";
 import axios from "axios";
+import MovieCard from "../components/MovieCard";
+import MovieList from "../components/MovieList";
 //const API_URL = import.meta.env.VITE_API_URL;
 const API_URL = "http://localhost:3000/api/movies";
 export default function Homepage() {
@@ -33,37 +35,7 @@ export default function Homepage() {
 
                 </div>
             </div>
-            <section className="mb-4">
-                <div className="container">
-                    <div className="row row-cols-1 row-cols-md-3 g-4">
-                        {movies.map(movie => (
-                            <div className="col" key={movie.id}>
-                                <div className="card">
-                                    <Link to={`/movies/${movie._id}`}>
-                                        <img className="card-img-top" src={movie.image} alt={movie.title} />
-                                    </Link>
-                                    <div className="card-body">
-                                        <h5 className="card-title">
-                                            {movie.title}
-                                        </h5>
-                                        <div className="my-2">
-                                            {movie.genre}
-                                        </div>
-                                        <Link className="btn btn-dark" to={`/movies/${movie._id}`}></Link>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        ))}
-                    </div>
-                    <div className="text-center">
-                        <Link className="btn btn-dark mt-5">View Details</Link>
-                    </div>
-                </div>
-
-            </section>
+            <MovieList movies={movies} />
         </>
     )
 }

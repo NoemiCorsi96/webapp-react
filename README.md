@@ -16,4 +16,5 @@ Cosa fare:
 -Ajax requests per prendere la lista dei film dall'homepage[X]
 -istallare il middleware CORS [X]
 -chiamata ajax per il singolo film e le recensioni [X]
+-Componentizzare[X]
 
