@@ -13,6 +13,7 @@ Cosa fare:
 -definire il componente e layout per l'Homepage [X]
 -denire la seconda rotta '/:id' [X]
 -fare il moviePage componenete e il suo layout[X]
--Ajax requests per prendere la lista dei film dall'homepage
+-Ajax requests per prendere la lista dei film dall'homepage[]
+-istallare il middleware CORS [X]
 -chiamata ajax per il singolo film e le recensioni 
 
